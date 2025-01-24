@@ -2,6 +2,14 @@ package com.de013.model;
 
 import java.io.Serializable;
 
+import org.springframework.beans.BeanUtils;
+
+import com.de013.dto.RoleRequest;
+import com.de013.dto.RoleVO;
+import com.de013.utils.Utils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -29,4 +37,16 @@ public class Role implements Serializable{
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private ERole name;
+
+    public Role(RoleRequest request) {
+        BeanUtils.copyProperties(request, this);
+    }
+
+    @JsonIgnore
+    public RoleVO getVO() {
+        RoleVO roleVO = new RoleVO();
+        BeanUtils.copyProperties(this, roleVO);
+
+        return roleVO;
+    }
 }

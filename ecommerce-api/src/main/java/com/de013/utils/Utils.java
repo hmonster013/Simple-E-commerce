@@ -15,10 +15,9 @@ import org.springframework.data.domain.Page;
 
 import com.de013.model.Paging;
 
-import ch.qos.logback.classic.pattern.Util;
-
 public class Utils {
     public static boolean isNotEmpty(Object str) {
+        String test = str.toString();
         if (str == null || 
             str.toString().trim().length() == 0 || 
             str.toString().trim().equalsIgnoreCase(null)) {

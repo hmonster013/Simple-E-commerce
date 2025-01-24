@@ -22,4 +22,12 @@ public class URI {
     public static final String FILENAME = "/{filename}";
     public static final String DELETE = "/delete";
     public static final String NAME = "/{name}";
+    public static final String CATEGORY = "/category";
+    public static final String COUPON = "/coupon";
+    public static final String ORDER = "/order";
+    public static final String PRODUCT = "/product";
+    public static final String REVIEW = "/review";
+    public static final String ROLE = "/role";
+    public static final String WISHLIST = "/wishlist";
+    public static final String ORDER_ITEM = "/order-item";
 }
