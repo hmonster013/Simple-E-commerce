@@ -3,6 +3,7 @@ package com.de013.dto;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,8 +40,8 @@ public class UserVO implements Serializable {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date updateDate;
-    private Set<Role> roles = new HashSet<>();
-    private Set<Order> orders = new HashSet<>();
+    private List<RoleVO> roles;
+    // private List<OrderVO> orders;
     private Wishlist wishlist;
-    private Set<Review> reviews = new HashSet<>();
+    // private List<ReviewVO> reviews;
 }

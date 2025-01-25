@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 public class OrderVO implements Serializable {
     private Long id;
-    private User user;
+    private UserVO user;
     private BigDecimal totalAmount;
     private String status;
 

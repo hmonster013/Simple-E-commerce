@@ -67,7 +67,7 @@ public class Category implements Serializable {
     @JsonIgnore
     public CategoryVO getVO() {
         CategoryVO categoryVO = new CategoryVO();
-        Utils.copyNonNullProperties(this, categoryVO);
+        BeanUtils.copyProperties(this, categoryVO);
 
         return categoryVO;
     }

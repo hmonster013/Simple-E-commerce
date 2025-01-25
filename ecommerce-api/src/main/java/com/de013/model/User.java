@@ -111,6 +111,7 @@ public class User implements Serializable{
     public UserVO getVO() {
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(this, userVO);
+        userVO.setRoles(this.roles.stream().map(Role::getVO).toList());
         
         return userVO;
     }

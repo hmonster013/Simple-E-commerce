@@ -7,4 +7,22 @@ public class JConstants {
 	public static final String DATA_TOTAL = "total";
 	public static final String DATA_SUMMARY = "summary";
 	public static final String BEARER = "Bearer ";
+
+	public enum OrderStatus {
+		PENDING,
+		PROCESSING,
+		CONFIRM,
+		SHIPPED,
+		DELIVERED,
+		CANCEL,
+		RETURN,
+		FAIL,
+		SUCCESS
+	}
+
+	public enum CrudMethod {
+		CREATE,
+		UPDATE,
+		DELETE
+	}
 }

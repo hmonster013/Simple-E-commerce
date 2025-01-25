@@ -12,11 +12,15 @@ import com.de013.model.User;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderRequest implements Serializable{
     private Long id;
     private User user;
@@ -32,4 +36,12 @@ public class OrderRequest implements Serializable{
     @JsonDeserialize(using = CustomDateDeserializer.class)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date updateDate;
+
+    public OrderRequest(User user, String status) {
+        this.user = user;
+        this.totalAmount = BigDecimal.ZERO;
+        this.status =status;
+        this.createDate = new Date();
+        this.updateDate = new Date();
+    }
 }

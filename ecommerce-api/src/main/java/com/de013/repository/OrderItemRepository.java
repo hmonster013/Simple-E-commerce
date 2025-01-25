@@ -7,13 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.de013.dto.FilterVO;
+import com.de013.model.Order;
 import com.de013.model.OrderItem;
 
 import io.lettuce.core.dynamic.annotation.Param;
+import java.util.List;
+
 
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     
     @Query("SELECT c FROM OrderItem c WHERE 1 = 1")
     public Page<OrderItem> search(@Param("p") FilterVO request, Pageable paging);
+
+    List<OrderItem> findByOrder(Order order);
 }

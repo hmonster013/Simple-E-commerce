@@ -22,11 +22,19 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(
     name = "order_items"
 )
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,11 +58,21 @@ public class OrderItem implements Serializable {
         BeanUtils.copyProperties(request, this);
     }
 
+    public OrderItem(OrderItem orderItem) {
+        this.id = orderItem.getId();
+        this.order = orderItem.getOrder();
+        this.product = orderItem.getProduct();
+        this.quantity = orderItem.getQuantity();
+        this.price = orderItem.getPrice();
+    }
+
     @JsonIgnore
     public OrderItemVO getVO() {
         OrderItemVO orderItemVO = new OrderItemVO();
         BeanUtils.copyProperties(this, orderItemVO);
-
+        orderItemVO.setOrder(this.order.getVO());
+        orderItemVO.setProduct(this.product.getVO());
+        
         return orderItemVO;
     }
 }

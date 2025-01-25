@@ -1,5 +1,7 @@
 package com.de013.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,10 @@ import org.springframework.stereotype.Service;
 import com.de013.dto.FilterVO;
 import com.de013.dto.OrderRequest;
 import com.de013.model.Order;
+import com.de013.model.User;
 import com.de013.repository.OrderRepository;
 import com.de013.utils.Utils;
+import com.de013.utils.JConstants.OrderStatus;
 
 @Service
 public class OrderService {
@@ -52,5 +56,20 @@ public class OrderService {
 
     public void deleteById(Long id) {
         orderRepository.deleteById(id);
+    }
+
+    public List<Order> findByUserAndStatus(User user, String status) {
+        return orderRepository.findByUserAndStatus(user, status);
+    }
+
+
+    public Order findByUserPending(User user) {
+        List<Order> lsOrder = orderRepository.findByUserAndStatus(user, OrderStatus.PENDING.name());
+
+        if (lsOrder.size() == 0) {
+            return null;
+        } 
+
+        return lsOrder.get(0);
     }
 }

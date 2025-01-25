@@ -48,7 +48,6 @@ public class Order implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(precision = 10, scale = 2)
     private BigDecimal totalAmount;
 
     @Size(max = 50)
@@ -70,6 +69,7 @@ public class Order implements Serializable {
     public OrderVO getVO() {
         OrderVO orderVO = new OrderVO();
         BeanUtils.copyProperties(this, orderVO);
+        orderVO.setUser(this.user.getVO());
         
         return orderVO;
     }

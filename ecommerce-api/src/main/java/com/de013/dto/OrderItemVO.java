@@ -13,8 +13,8 @@ import lombok.Setter;
 @Setter
 public class OrderItemVO implements Serializable {
     private Long id;
-    private Order order;
-    private Product product;
+    private OrderVO order;
+    private ProductVO product;
     private int quantity;
     private BigDecimal price;
 }

@@ -78,7 +78,7 @@ public class Product implements Serializable {
     public ProductVO getVO() {
         ProductVO productVO = new ProductVO();
         BeanUtils.copyProperties(this, productVO);
-
+        
         return productVO;
     }
 }
