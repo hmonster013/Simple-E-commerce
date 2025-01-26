@@ -22,6 +22,7 @@ import com.de013.exception.RestException;
 import com.de013.model.Order;
 import com.de013.model.OrderItem;
 import com.de013.model.Paging;
+import com.de013.model.Product;
 import com.de013.service.OrderItemService;
 import com.de013.service.OrderService;
 import com.de013.service.UserService;
@@ -72,7 +73,7 @@ public class OrderItemController extends BaseController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity create(@RequestBody OrderItemRequest request) throws Exception {
         log.info("Create order item");
-        
+
         OrderItem orderItem = orderItemService.create(request);
         return response(orderItem.getVO());
     }

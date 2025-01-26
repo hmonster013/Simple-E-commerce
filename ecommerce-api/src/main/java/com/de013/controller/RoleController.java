@@ -28,6 +28,7 @@ import com.de013.dto.RoleVO;
 import com.de013.exception.RestException;
 import com.de013.model.Coupon;
 import com.de013.model.Paging;
+import com.de013.model.Product;
 import com.de013.model.Role;
 import com.de013.service.CouponService;
 import com.de013.service.RoleService;

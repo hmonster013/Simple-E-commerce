@@ -20,4 +20,7 @@ de013:
         jwtCookieName: de013
         jwtSecret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9heyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQhSflKxwRJSMeKKF2QT4fwpMeJf36POk6yJVhadQssw5c
         jwtExpirationMs: 86400000
+    
+file:
+    upload-dir: E:\local_code\Simple E-commerce\images\
 

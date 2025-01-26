@@ -64,11 +64,18 @@ public class Category implements Serializable {
         BeanUtils.copyProperties(request, this);
     }
 
+    public Category(Integer id) {
+        this.id = id;
+    }
+
     @JsonIgnore
     public CategoryVO getVO() {
         CategoryVO categoryVO = new CategoryVO();
         BeanUtils.copyProperties(this, categoryVO);
 
+        if (products != null && !products.isEmpty()) {
+            categoryVO.setProducts(this.products.stream().map(Product::getId).toList());
+        }
         return categoryVO;
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.de013.custom.CustomDateDeserializer;
 import com.de013.custom.CustomDateSerializer;
 import com.de013.model.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -32,5 +33,5 @@ public class CategoryVO implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date updateDate;
     
-    private List<Product> products;
+    private List<Long> products;
 }

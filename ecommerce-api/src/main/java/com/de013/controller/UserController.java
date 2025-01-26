@@ -23,11 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.de013.dto.CouponRequest;
 import com.de013.dto.CouponVO;
 import com.de013.dto.FilterVO;
+import com.de013.dto.ProfileRequest;
 import com.de013.dto.UserRequest;
 import com.de013.dto.UserVO;
 import com.de013.exception.RestException;
 import com.de013.model.Coupon;
 import com.de013.model.Paging;
+import com.de013.model.Product;
 import com.de013.model.User;
 import com.de013.service.CouponService;
 import com.de013.service.UserService;
@@ -114,5 +116,17 @@ public class UserController extends BaseController {
 
         userService.deleteById(id);
         return responseMessage("Deleted user [" + id + "] sucessfully");
-    }   
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PutMapping(value = URI.PROFILE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateProfile(@ModelAttribute ProfileRequest request) throws Exception {
+        Long id = request.getId();
+        log.info("Update profile user id [{}]", id);
+
+        User existed = userService.findById(id);
+        User result = userService.updateProfile(request, existed);
+
+        return response(result);
+    }
 }

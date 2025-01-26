@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.de013.dto.FilterVO;
 import com.de013.dto.ProductRequest;
@@ -20,6 +22,7 @@ import com.de013.model.Paging;
 import com.de013.model.Product;
 import com.de013.service.ProductService;
 import com.de013.utils.URI;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping(URI.V1 + URI.PRODUCT)
@@ -54,16 +57,28 @@ public class ProductController extends BaseController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity create(@RequestBody ProductRequest request) throws Exception {
+    public ResponseEntity create(
+        @RequestParam("requestJsonData") String jsonData,
+        @RequestPart(value = "files", required = false) MultipartFile[] files
+    ) throws Exception {
         log.info("Create product");
 
-        Product product = productService.create(request);
+        ObjectMapper objectMapper = new ObjectMapper();
+        ProductRequest request = objectMapper.readValue(jsonData, ProductRequest.class);
+
+        Product product = productService.create(request, files);
         return response(product.getVO());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@RequestBody ProductRequest request) throws Exception {
+    public ResponseEntity update(
+        @RequestParam("requestJsonData") String jsonData,
+        @RequestPart(value = "files", required = false) MultipartFile[] files
+    ) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ProductRequest request = objectMapper.readValue(jsonData, ProductRequest.class);
+
         Long id = request.getId();
 
         log.info("Update product id [{}]", id);
@@ -73,7 +88,7 @@ public class ProductController extends BaseController {
             throw new RestException("Product id [" + id + "] invalid");
         }
 
-        Product result = productService.update(request, existed);
+        Product result = productService.update(request, existed, files);
         return response(result.getVO());
     }
 

@@ -48,7 +48,7 @@ public class CategoryController extends BaseController {
         return responseList(reponseList, result);
     }
 
-    @GetMapping(value = URI.VIEW, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = URI.VIEW + URI.ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity viewDataById(@PathVariable("id") Integer id) throws Exception {
         log.info("Get detail category by [" + id + "]");
         

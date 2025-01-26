@@ -9,7 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.de013.custom.CustomDateDeserializer;
 import com.de013.custom.CustomDateSerializer;
-import com.de013.model.Category;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -23,7 +22,7 @@ public class ProductRequest implements Serializable{
     private String name;
     private String description;
     private BigDecimal price;
-    private List<Integer> imageUrl;
+    private List<String> imageUrl;
     private int stockQuantity;
 
     @JsonSerialize(using = CustomDateSerializer.class)
@@ -35,5 +34,6 @@ public class ProductRequest implements Serializable{
     @JsonDeserialize(using = CustomDateDeserializer.class)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date updateDate;
-    private List<Category> categories;
+
+    private List<Integer> categories;
 }

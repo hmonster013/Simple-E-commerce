@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.de013.dto.CategoryRequest;
 import com.de013.dto.FilterVO;
+import com.de013.dto.ProfileRequest;
 import com.de013.dto.UserRequest;
 import com.de013.model.Category;
 import com.de013.model.User;
@@ -38,6 +39,14 @@ public class UserService {
     }
 
     public User update(UserRequest request, User existed) {
+        log.debug("Update " + request);
+        Utils.copyNonNullProperties(request, existed);
+        existed = this.save(existed);
+
+        return existed;
+    }
+
+    public User updateProfile(ProfileRequest request, User existed) {
         log.debug("Update " + request);
         Utils.copyNonNullProperties(request, existed);
         existed = this.save(existed);

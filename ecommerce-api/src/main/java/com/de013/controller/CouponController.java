@@ -29,6 +29,7 @@ import com.de013.exception.RestException;
 import com.de013.model.Category;
 import com.de013.model.Coupon;
 import com.de013.model.Paging;
+import com.de013.model.Product;
 import com.de013.service.CategoryService;
 import com.de013.service.CouponService;
 import com.de013.utils.URI;

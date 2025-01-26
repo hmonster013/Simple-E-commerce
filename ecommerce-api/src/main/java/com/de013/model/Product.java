@@ -51,7 +51,7 @@ public class Product implements Serializable {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
-    private List<Integer> imageUrl;
+    private List<String> imageUrl;
     
     @Column(nullable = false)
     private int stockQuantity;
@@ -79,6 +79,9 @@ public class Product implements Serializable {
         ProductVO productVO = new ProductVO();
         BeanUtils.copyProperties(this, productVO);
         
+        if (categories != null && !categories.isEmpty()) {
+            productVO.setCategories(this.categories.stream().map(Category::getId).toList());
+        }
         return productVO;
     }
 }

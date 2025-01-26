@@ -17,6 +17,7 @@ import com.de013.dto.ReviewRequest;
 import com.de013.dto.ReviewVO;
 import com.de013.exception.RestException;
 import com.de013.model.Paging;
+import com.de013.model.Product;
 import com.de013.model.Review;
 import com.de013.service.ReviewService;
 import com.de013.utils.URI;

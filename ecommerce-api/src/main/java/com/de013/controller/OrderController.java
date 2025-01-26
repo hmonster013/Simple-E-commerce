@@ -18,6 +18,7 @@ import com.de013.dto.OrderVO;
 import com.de013.exception.RestException;
 import com.de013.model.Order;
 import com.de013.model.Paging;
+import com.de013.model.Product;
 import com.de013.service.OrderService;
 import com.de013.utils.URI;
 

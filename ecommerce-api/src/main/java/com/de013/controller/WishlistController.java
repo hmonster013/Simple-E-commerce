@@ -17,6 +17,7 @@ import com.de013.dto.WishlistRequest;
 import com.de013.dto.WishlistVO;
 import com.de013.exception.RestException;
 import com.de013.model.Paging;
+import com.de013.model.Product;
 import com.de013.model.Wishlist;
 import com.de013.service.WishlistService;
 import com.de013.utils.URI;
