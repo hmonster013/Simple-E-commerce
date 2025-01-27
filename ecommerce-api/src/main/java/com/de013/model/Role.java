@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import com.de013.dto.RoleRequest;
 import com.de013.dto.RoleVO;
 import com.de013.utils.Utils;
+import com.de013.utils.JConstants.ERole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import ch.qos.logback.core.joran.util.beans.BeanUtil;

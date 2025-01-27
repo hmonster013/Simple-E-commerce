@@ -25,4 +25,22 @@ public class JConstants {
 		UPDATE,
 		DELETE
 	}
+
+	public enum ERole {
+		ROLE_USER,
+		ROLE_MODERATOR,
+		ROLE_ADMIN
+	}
+
+	public enum EUserStatus {
+		UNVERIFIED,
+		ACTIVE,
+		DELETED,
+		BANNED
+	}
+	
+	public enum OrderType {
+		PURCHASE,
+		SALES
+	}
 }

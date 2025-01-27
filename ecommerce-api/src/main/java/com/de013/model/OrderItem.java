@@ -48,6 +48,10 @@ public class OrderItem implements Serializable {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @OneToOne
+    @JoinColumn(name = "review_id")
+    private Review review;
+
     @Column(nullable = false)
     private int quantity;
 
@@ -70,7 +74,7 @@ public class OrderItem implements Serializable {
     public OrderItemVO getVO() {
         OrderItemVO orderItemVO = new OrderItemVO();
         BeanUtils.copyProperties(this, orderItemVO);
-        orderItemVO.setOrder(this.order.getVO());
+        orderItemVO.setOrderId(this.order.getId());
         orderItemVO.setProduct(this.product.getVO());
         
         return orderItemVO;

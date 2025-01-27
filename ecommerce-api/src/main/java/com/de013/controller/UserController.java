@@ -90,7 +90,7 @@ public class UserController extends BaseController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@ModelAttribute UserRequest request) throws Exception {
+    public ResponseEntity update(@RequestBody UserRequest request) throws Exception {
         Long id = request.getId();
 
         log.info("Update user id [{}]", id);

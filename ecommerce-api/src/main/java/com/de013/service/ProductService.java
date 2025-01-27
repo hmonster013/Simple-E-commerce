@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +36,14 @@ public class ProductService {
     private CategoryService categoryService;
 
     public Page<Product> search(FilterVO request, Pageable paging) {
+        if (request.getCategories() != null) {
+            List<Integer> categoryIds = request.getCategories();
+            List<Category> categories = null;
+            categories = categoryService.findByListId(categoryIds);
+    
+            return productRepository.search(request, paging, categories, categories.size());
+        }
+        
         return productRepository.search(request, paging);
     }
 

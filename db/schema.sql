@@ -13,6 +13,7 @@ CREATE TABLE users (
     full_name VARCHAR(255),
     phone_number VARCHAR(15),
     address TEXT,
+    status VARCHAR(20) NOT NULL,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -37,6 +38,10 @@ CREATE TABLE orders (
     user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
     total_amount NUMERIC NOT NULL,
     status VARCHAR(50) DEFAULT 'Pending',
+    coupon_id int REFERENCES coupons(id),
+    full_name VARCHAR(255),
+    phone_number VARCHAR(15),
+    shipping_address TEXT,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -76,25 +81,10 @@ CREATE TABLE product_categories (
 
 CREATE TABLE reviews (
     id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT REFERENCES users(id),
-    product_id BIGINT REFERENCES products(id),
     rating INT CHECK (rating >= 1 AND rating <= 5),
     comment TEXT,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE wishlist (
-    id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT REFERENCES users(id),
-    create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE wishlist_products (
-    wishlist_id BIGINT REFERENCES wishlist(id) ON DELETE CASCADE,
-    product_id BIGINT REFERENCES products(id) ON DELETE CASCADE,
-    PRIMARY KEY (wishlist_id, product_id)
 );
 
 

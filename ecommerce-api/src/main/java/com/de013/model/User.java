@@ -11,10 +11,13 @@ import org.springframework.beans.BeanUtils;
 import com.de013.dto.UserRequest;
 import com.de013.dto.UserVO;
 import com.de013.utils.Utils;
+import com.de013.utils.JConstants.EUserStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -74,6 +77,10 @@ public class User implements Serializable{
     @Column(columnDefinition = "TEXT")
     private String address;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private EUserStatus status;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
@@ -90,12 +97,6 @@ public class User implements Serializable{
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Order> orders = new HashSet<>();
-
-    @OneToOne(mappedBy = "user")
-    private Wishlist wishlist;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Review> reviews = new HashSet<>();
     
     public User(String userName, String email, String password) {
         this.userName = userName;

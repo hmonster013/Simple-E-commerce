@@ -59,9 +59,9 @@ public class Coupon implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date validUntil;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
+    private Date createDate = new Date();
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateDate;
+    private Date updateDate = new Date();
 
     public Coupon(CouponRequest request) {
         BeanUtils.copyProperties(request, this);

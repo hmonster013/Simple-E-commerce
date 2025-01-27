@@ -1,6 +1,8 @@
 package com.de013.service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +13,16 @@ import org.springframework.stereotype.Service;
 
 import com.de013.dto.FilterVO;
 import com.de013.dto.OrderRequest;
+import com.de013.dto.ProductRequest;
+import com.de013.dto.UserRequest;
 import com.de013.model.Order;
+import com.de013.model.OrderItem;
+import com.de013.model.Product;
 import com.de013.model.User;
 import com.de013.repository.OrderRepository;
 import com.de013.utils.Utils;
 import com.de013.utils.JConstants.OrderStatus;
+import com.de013.utils.JConstants.OrderType;
 
 @Service
 public class OrderService {
@@ -23,6 +30,9 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private ProductService productService;
 
     public Page<Order> search(FilterVO request, Pageable paging) {
         return orderRepository.search(request, paging);
@@ -58,18 +68,69 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    public List<Order> findByUserAndStatus(User user, String status) {
+    public List<Order> findByUserAndStatus(User user, OrderStatus status) {
         return orderRepository.findByUserAndStatus(user, status);
     }
 
 
     public Order findByUserPending(User user) {
-        List<Order> lsOrder = orderRepository.findByUserAndStatus(user, OrderStatus.PENDING.name());
+        List<Order> lsOrder = orderRepository.findByUserAndStatus(user, OrderStatus.PENDING);
 
         if (lsOrder.size() == 0) {
             return null;
         } 
 
         return lsOrder.get(0);
+    }
+
+    // Crate order status (PENDING)
+    public void createPending(User user) {
+        OrderRequest orderRequest = new OrderRequest();
+        orderRequest.setUser(user);
+        orderRequest.setType(OrderType.SALES);
+        orderRequest.setTotalAmount(BigDecimal.ZERO);
+        orderRequest.setStatus(OrderStatus.PENDING);
+
+        this.create(orderRequest);
+    } 
+
+    // Order status (PENDING -> PROCESSING)
+    public Order updateProcessing(OrderRequest request, Order existed) {
+        BigDecimal totalAmount = BigDecimal.ZERO;
+        if (existed.getOrderItems() != null && !existed.getOrderItems().isEmpty()) {
+            for (OrderItem orderItem : existed.getOrderItems()) {
+                // totalAmount += price * quantity
+                totalAmount = totalAmount.add(orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity())));
+            }
+
+            if (request.getCoupon() != null) {
+                // totalAmount = totalAmount - discount * totalAmount
+                BigDecimal discount = totalAmount.multiply(request.getCoupon().getDiscountPercentage().divide(BigDecimal.valueOf(100)));
+                totalAmount = totalAmount.subtract(discount);
+            }
+
+            request.setTotalAmount(totalAmount);;
+        }
+
+        request.setStatus(OrderStatus.PROCESSING);
+
+        Utils.copyNonNullProperties(request, existed);
+        existed = this.save(existed);
+
+        // Reduce quantity product
+        this.reduceQuantityProduct(existed.getOrderItems());
+
+        // New order status pending
+        this.createPending(existed.getUser());
+
+        return existed;
+    }
+
+    public void reduceQuantityProduct(Set<OrderItem> orderItems) {
+        for (OrderItem orderItem : orderItems) {
+            Product product = orderItem.getProduct();
+            product.setStockQuantity(product.getStockQuantity() - orderItem.getQuantity());
+            productService.save(product);
+        }
     }
 }

@@ -4,12 +4,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.de013.dto.FilterVO;
 import com.de013.model.Coupon;
-
-import io.lettuce.core.dynamic.annotation.Param;
 
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {

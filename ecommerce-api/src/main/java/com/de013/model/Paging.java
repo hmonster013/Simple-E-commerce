@@ -4,16 +4,22 @@ import java.io.Serializable;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
 import com.de013.dto.FilterVO;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Paging implements Serializable{
 public static final int PAGE = 1;
     public static final int SIZE = 10;
 
-    public static final String SORT = "id";
-    public static final String DESC = Direction.DESC.name();
+    private String sortColumn = "id";
+    private String sortOrder = Direction.ASC.name();
 
     private int page = PAGE;
     private int size = SIZE;
@@ -60,6 +66,7 @@ public static final int PAGE = 1;
 	public int getTotalPages() {
 		return totalPages > 0 ? totalPages : 1;
 	}
+
 	public void setTotalPages(int totalPages) {
 		this.totalPages = totalPages;
 	}
@@ -67,7 +74,17 @@ public static final int PAGE = 1;
     public Pageable getPageRequest(FilterVO request) {
         setPage(request.getPage());
         setSize(request.getSize());
-        Pageable pageRequest = PageRequest.of(this.page - 1, this.size);
+        setSortColumn(request.getSortColumn());
+        setSortOrder(request.getSortOrder());
+
+        Sort sort;
+        if (this.sortOrder.equals(Direction.ASC.name())) {
+            sort = Sort.by(Sort.Order.asc(this.sortColumn));
+        } else {
+            sort = Sort.by(Sort.Order.desc(this.sortColumn));
+        }
+
+        Pageable pageRequest = PageRequest.of(this.page - 1, this.size, sort);
 		return pageRequest;
 	} 
 }

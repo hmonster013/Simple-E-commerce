@@ -18,7 +18,6 @@ import com.de013.dto.OrderVO;
 import com.de013.exception.RestException;
 import com.de013.model.Order;
 import com.de013.model.Paging;
-import com.de013.model.Product;
 import com.de013.service.OrderService;
 import com.de013.utils.URI;
 
@@ -90,5 +89,36 @@ public class OrderController extends BaseController {
 
         orderService.deleteById(id);
         return responseMessage("Deleted order [" + id + "] successfully");
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PostMapping(value = URI.HISTORY, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getUserHistory(@RequestBody FilterVO request) throws Exception {
+        log.info("View orders by user id [{}]", request.getUserId());
+
+        request.setOrderHistory(true);
+        Pageable paging = new Paging().getPageRequest(request);
+        Page<Order> result = orderService.search(request, paging);
+        log.info("View orders total elements [{}]", result.getTotalElements());
+        List<OrderVO> responseList = result.stream().map(Order::getVO).toList();
+
+        return responseList(responseList, result);
+    }
+
+    // Order status (PENDING -> PROCESSING)
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PutMapping(value = URI.PROCESSING, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity processingOrder(@RequestBody OrderRequest request) {
+        Long id = request.getId();
+
+        log.info("Convert order to processing id [{}]", id);
+        Order existed = orderService.findById(id);
+
+        if (existed == null) {
+            throw new RestException("Order id [" + id + "] invalid");
+        }
+
+        Order result = orderService.updateProcessing(request, existed);
+        return response(result.getVO());
     }
 }

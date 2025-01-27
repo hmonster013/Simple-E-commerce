@@ -2,18 +2,13 @@ package com.de013.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.de013.custom.CustomDateDeserializer;
 import com.de013.custom.CustomDateSerializer;
-import com.de013.model.Order;
-import com.de013.model.Review;
-import com.de013.model.Role;
-import com.de013.model.Wishlist;
+import com.de013.utils.JConstants.EUserStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -30,6 +25,7 @@ public class UserVO implements Serializable {
     private String fullName;
     private String phoneNumber;
     private String address;
+    private EUserStatus status;
 
     @JsonSerialize(using = CustomDateSerializer.class)
     @JsonDeserialize(using = CustomDateDeserializer.class)
@@ -42,6 +38,4 @@ public class UserVO implements Serializable {
     private Date updateDate;
     private List<RoleVO> roles;
     // private List<OrderVO> orders;
-    private Wishlist wishlist;
-    // private List<ReviewVO> reviews;
 }

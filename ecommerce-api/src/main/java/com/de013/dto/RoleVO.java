@@ -2,7 +2,7 @@ package com.de013.dto;
 
 import java.io.Serializable;
 
-import com.de013.model.ERole;
+import com.de013.utils.JConstants.ERole;
 
 import lombok.Getter;
 import lombok.Setter;

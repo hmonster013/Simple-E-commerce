@@ -7,22 +7,25 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 
+import com.de013.dto.OrderItemVO;
 import com.de013.dto.OrderRequest;
 import com.de013.dto.OrderVO;
-import com.de013.utils.Utils;
+import com.de013.utils.JConstants.OrderStatus;
+import com.de013.utils.JConstants.OrderType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -31,7 +34,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Singular;
 
 @Entity
 @Table(name = "orders")
@@ -48,10 +50,27 @@ public class Order implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private OrderType type;
+
     private BigDecimal totalAmount;
 
-    @Size(max = 50)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private OrderStatus status;
+
+    @OneToOne
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
+
+    private String fullName;
+
+    @Size(max = 15)
+    private String phoneNumber;
+    
+    @Column(columnDefinition = "TEXT")
+    private String shippingAddress;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
@@ -70,7 +89,14 @@ public class Order implements Serializable {
         OrderVO orderVO = new OrderVO();
         BeanUtils.copyProperties(this, orderVO);
         orderVO.setUser(this.user.getVO());
-        
+        if (this.orderItems != null && !this.orderItems.isEmpty()) {
+            orderVO.setOrderItems(this.orderItems.stream().map(OrderItem::getVO).toList());
+        }
+
+        if (coupon != null) {
+            orderVO.setCoupon(this.coupon.getVO());
+        }
+
         return orderVO;
     }
 }

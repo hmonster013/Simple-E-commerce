@@ -12,7 +12,7 @@ import com.de013.custom.CustomDateSerializer;
 import com.de013.model.Order;
 import com.de013.model.Review;
 import com.de013.model.Role;
-import com.de013.model.Wishlist;
+import com.de013.utils.JConstants.EUserStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -29,7 +29,8 @@ public class UserRequest implements Serializable{
     private String fullName;
     private String phoneNumber;
     private String address;
-
+    private EUserStatus status;
+    
     @JsonSerialize(using = CustomDateSerializer.class)
     @JsonDeserialize(using = CustomDateDeserializer.class)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -41,6 +42,4 @@ public class UserRequest implements Serializable{
     private Date updateDate;
     private Set<Role> roles = new HashSet<>();
     private Set<Order> orders = new HashSet<>();
-    private Wishlist wishlist;
-    private Set<Review> reviews = new HashSet<>();
 }

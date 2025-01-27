@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.de013.model.ERole;
 import com.de013.model.Role;
 import com.de013.model.User;
 import com.de013.payload.request.LoginRequest;
@@ -31,6 +30,7 @@ import com.de013.repository.UserRepository;
 import com.de013.security.jwt.JwtUtils;
 import com.de013.security.service.UserDetailsImpl;
 import com.de013.utils.URI;
+import com.de013.utils.JConstants.ERole;
 
 import jakarta.validation.Valid;
 

@@ -115,7 +115,7 @@ public class OrderItemController extends BaseController {
 
         Order existed = orderService.findByUserPending(request.getUser());
         if (existed == null) {
-            OrderRequest orderRequest = new OrderRequest(request.getUser(), OrderStatus.PENDING.name());
+            OrderRequest orderRequest = new OrderRequest(request.getUser(), OrderStatus.PENDING);
             Order order = orderService.create(orderRequest);
             request.setOrder(order);
         } else {

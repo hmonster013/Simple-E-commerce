@@ -19,18 +19,16 @@ import lombok.Setter;
 @Setter
 public class ReviewVO implements Serializable {
     private Long id;
-    private User user;
-    private Product product;
     private int rating;
     private String comment;
 
     @JsonSerialize(using = CustomDateSerializer.class)
     @JsonDeserialize(using = CustomDateDeserializer.class)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date createDate;
+    private Date createDate = new Date();
 
     @JsonSerialize(using = CustomDateSerializer.class)
     @JsonDeserialize(using = CustomDateDeserializer.class)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date updateDate;
+    private Date updateDate = new Date();
 }

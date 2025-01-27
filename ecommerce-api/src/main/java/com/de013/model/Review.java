@@ -19,6 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -43,13 +44,8 @@ public class Review implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @OneToOne(mappedBy = "review")
+    private OrderItem orderItem;
 
     private int rating;
 
@@ -57,10 +53,10 @@ public class Review implements Serializable {
     private String comment;
     
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
+    private Date createDate = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateDate;
+    private Date updateDate = new Date();
 
     public Review(ReviewRequest request) {
         BeanUtils.copyProperties(request, this);

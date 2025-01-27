@@ -31,4 +31,6 @@ public class URI {
     public static final String WISHLIST = "/wishlist";
     public static final String ORDER_ITEM = "/order-item";
     public static final String PROFILE = "/profile";
+    public static final String PROCESSING = "/processing";
+    public static final String HISTORY = "/history";
 }

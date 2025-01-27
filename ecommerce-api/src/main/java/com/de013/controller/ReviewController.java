@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import com.de013.model.Paging;
 import com.de013.model.Product;
 import com.de013.model.Review;
 import com.de013.service.ReviewService;
+import com.de013.utils.JConstants;
 import com.de013.utils.URI;
 
 @RestController
@@ -30,6 +32,7 @@ public class ReviewController extends BaseController {
     @Autowired
     private ReviewService reviewService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = URI.LIST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity listAll(@RequestBody FilterVO request) throws Exception {
         log.info("Search reviews");
@@ -53,16 +56,29 @@ public class ReviewController extends BaseController {
         }
     }
 
+    @GetMapping(value = URI.VIEW + URI.PRODUCT , produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity viewDataByProduct(@RequestBody FilterVO request) throws Exception {
+        log.info("Get reviews by product id [{}]", request.getProductId());
+        Pageable paging = new Paging().getPageRequest(request);
+        Page<Review> result = reviewService.findByProductId(request, paging);
+        log.info("Search reviews total elements [{}]", result.getTotalElements());
+        List<ReviewVO> responseList = result.stream().map(Review::getVO).toList();
+
+        return responseList(responseList, result);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity create(@RequestBody ReviewRequest request) throws Exception {
+    public ResponseEntity create(@ModelAttribute ReviewRequest request) throws Exception {
         log.info("Create review");
 
         Review review = reviewService.create(request);
         return response(review.getVO());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@RequestBody ReviewRequest request) throws Exception {
+    public ResponseEntity update(@ModelAttribute ReviewRequest request) throws Exception {
         Long id = request.getId();
 
         log.info("Update review id [{}]", id);
@@ -76,7 +92,7 @@ public class ReviewController extends BaseController {
         return response(result.getVO());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = URI.ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity deleteById(@PathVariable("id") Long id) throws Exception {
         log.info("Delete review id: [{}]", id);

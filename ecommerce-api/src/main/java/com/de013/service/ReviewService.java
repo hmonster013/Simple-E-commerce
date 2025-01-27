@@ -54,4 +54,8 @@ public class ReviewService {
     public void deleteById(Long id) {
         reviewRepository.deleteById(id);
     }
+
+    public Page<Review> findByProductId(FilterVO request, Pageable paging) {
+        return reviewRepository.findByProductId(request, paging);
+    }
 }
