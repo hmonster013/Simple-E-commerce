@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.1</version>
+		<version>3.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.de013</groupId>
-	<artifactId>api</artifactId>
+	<artifactId>common</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ecommerce-api</name>
-	<description>E-commerce api</description>
+	<name>ecommerce-common</name>
+	<description>E-commerce job</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -31,22 +31,8 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>com.de013</groupId>
-			<artifactId>common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -54,13 +40,9 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -80,16 +62,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.projectreactor</groupId>
-			<artifactId>reactor-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
@@ -113,7 +85,7 @@
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>

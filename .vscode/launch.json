@@ -2,11 +2,22 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Spring Boot-EcommerceApiApplication<demo>",
+            "name": "Spring Boot-EcommerceApiApplication<api>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "mainClass": "com.de013.EcommerceApiApplication",
-            "projectName": "demo",
+            "projectName": "api",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=61485 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=api"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-EcommerceCommonApplication<common>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.de013.EcommerceCommonApplication",
+            "projectName": "common",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
