@@ -20,6 +20,16 @@
             "projectName": "common",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-EcommerceJobApplication<job>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.de013.EcommerceJobApplication",
+            "projectName": "job",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

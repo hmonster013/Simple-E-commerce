@@ -1,0 +1,26 @@
+spring:
+    application:
+        name: ecommerce-api
+    datasource:
+        url: jdbc:postgresql://localhost:5432/ecommercedb
+        username: postgres
+        password: 1
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+    output:
+        ansi:
+            enabled: always
+
+de013:
+    app:
+        jwtCookieName: de013
+        jwtSecret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9heyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQhSflKxwRJSMeKKF2QT4fwpMeJf36POk6yJVhadQssw5c
+        jwtExpirationMs: 86400000
+    
+file:
+    upload-dir: E:\local_code\Simple E-commerce\images\
+
