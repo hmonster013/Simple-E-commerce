@@ -18,8 +18,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     
     @Query("SELECT pd FROM Product pd WHERE 1 = 1 "
         + " AND ( :#{#p.name} = '' OR pd.name LIKE CONCAT('%', :#{#p.name}, '%') ) "
-        + " AND ( :#{#p.fromPrice} <= pd.price ) "
-        + " AND ( :#{#p.toPrice} >= pd.price ) "
+        + " AND ( :#{#p.fromPrice} <= pd.salePrice ) "
+        + " AND ( :#{#p.toPrice} >= pd.salePrice ) "
         )
     public Page<Product> search(@Param("p") FilterVO request, Pageable paging);
     
@@ -28,8 +28,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         + " WHERE 1 = 1 " 
         + " AND ( :#{#p.name} = '' OR pd.name LIKE CONCAT('%', :#{#p.name}, '%') ) "
         + " AND ( c IN :categories ) "
-        + " AND ( :#{#p.fromPrice} <= pd.price ) "
-        + " AND ( :#{#p.toPrice} >= pd.price ) "
+        + " AND ( :#{#p.fromPrice} <= pd.salePrice ) "
+        + " AND ( :#{#p.toPrice} >= pd.salePrice ) "
         + " GROUP BY pd.id "
         + " HAVING COUNT(DISTINCT c) >= :categoriesSize ")
     public Page<Product> search(@Param("p") FilterVO request, Pageable paging, 

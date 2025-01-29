@@ -3,30 +3,31 @@ package com.de013.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.de013.custom.CustomDateDeserializer;
 import com.de013.custom.CustomDateSerializer;
-import com.de013.model.Category;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductVO implements Serializable {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ReportVO implements Serializable {
     private Long id;
-    private String name;
-    private String description;
-    private BigDecimal salePrice;
-    private BigDecimal purchasePrice;
-    private List<String> imageUrl;
-    private int stockQuantity;
+    private Date date;
+    private BigDecimal amount = BigDecimal.ZERO;
+    private String status;
 
     @JsonSerialize(using = CustomDateSerializer.class)
     @JsonDeserialize(using = CustomDateDeserializer.class)
@@ -37,6 +38,4 @@ public class ProductVO implements Serializable {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date updateDate;
-
-    private List<Integer> categories;
 }

@@ -26,7 +26,8 @@ public class ProductRequest implements Serializable{
     private Long id;
     private String name;
     private String description;
-    private BigDecimal price;
+    private BigDecimal salePrice;
+    private BigDecimal purchasePrice;
     private List<String> imageUrl;
     private int stockQuantity;
 

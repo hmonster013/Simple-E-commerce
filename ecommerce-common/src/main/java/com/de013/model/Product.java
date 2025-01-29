@@ -49,7 +49,10 @@ public class Product implements Serializable {
     private String description;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal price;
+    private BigDecimal purchasePrice;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal salePrice;
 
     private List<String> imageUrl;
     

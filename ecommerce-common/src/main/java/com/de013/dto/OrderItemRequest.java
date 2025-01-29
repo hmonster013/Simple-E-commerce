@@ -18,5 +18,4 @@ public class OrderItemRequest implements Serializable {
     private Order order;
     private Product product;
     private int quantity;
-    private BigDecimal price;
 }

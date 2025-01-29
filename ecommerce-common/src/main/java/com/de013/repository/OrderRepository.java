@@ -20,7 +20,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     
     @Query("SELECT c FROM Order c WHERE 1 = 1 "
         + " AND ( :#{#p.userId} = 0 OR :#{#p.userId} = c.user.id ) "
-        + " AND ( :#{#p.status} IS NULL OR :#{#p.orderStatus} = c.status ) "
+        + " AND ( :#{#p.status} = '' OR :#{#p.orderStatus} = c.status ) "
         + " AND ( :#{#p.orderHistory} = false OR 'PENDING' != c.status ) "
     )
     public Page<Order> search(@Param("p") FilterVO request, Pageable paging);

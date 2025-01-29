@@ -33,4 +33,8 @@ public class URI {
     public static final String PROFILE = "/profile";
     public static final String PROCESSING = "/processing";
     public static final String HISTORY = "/history";
+    public static final String REPORT = "/report";
+    public static final String TYPE = "/{type}";
+    public static final String FROM_DATE = "/{fromDate}";
+    public static final String TO_DATE = "/{toDate}";
 }

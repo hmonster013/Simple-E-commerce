@@ -55,9 +55,6 @@ public class OrderItem implements Serializable {
     @Column(nullable = false)
     private int quantity;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal price;
-
     public OrderItem(OrderItemRequest request) {
         BeanUtils.copyProperties(request, this);
     }
@@ -67,7 +64,6 @@ public class OrderItem implements Serializable {
         this.order = orderItem.getOrder();
         this.product = orderItem.getProduct();
         this.quantity = orderItem.getQuantity();
-        this.price = orderItem.getPrice();
     }
 
     @JsonIgnore

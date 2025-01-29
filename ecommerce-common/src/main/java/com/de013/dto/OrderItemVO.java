@@ -16,5 +16,4 @@ public class OrderItemVO implements Serializable {
     private Long orderId;
     private ProductVO product;
     private int quantity;
-    private BigDecimal price;
 }

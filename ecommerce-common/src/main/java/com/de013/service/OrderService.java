@@ -99,8 +99,18 @@ public class OrderService {
         BigDecimal totalAmount = BigDecimal.ZERO;
         if (existed.getOrderItems() != null && !existed.getOrderItems().isEmpty()) {
             for (OrderItem orderItem : existed.getOrderItems()) {
-                // totalAmount += price * quantity
-                totalAmount = totalAmount.add(orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity())));
+                // totalAmount += x_price * quantity
+                Product product = orderItem.getProduct();
+                switch (existed.getType()) {
+                    case SALES:
+                        totalAmount = totalAmount.add(product.getSalePrice().multiply(new BigDecimal(orderItem.getQuantity())));
+                        break;
+                    case PURCHASE:
+                        totalAmount = totalAmount.add(product.getPurchasePrice().multiply(new BigDecimal(orderItem.getQuantity())));
+                        break;
+                    default:
+                        break;
+                }
             }
 
             if (request.getCoupon() != null) {
@@ -117,19 +127,31 @@ public class OrderService {
         Utils.copyNonNullProperties(request, existed);
         existed = this.save(existed);
 
-        // Reduce quantity product
-        this.reduceQuantityProduct(existed.getOrderItems());
+        // Adjust quantity product
+        this.adjustQuantityProduct(existed.getOrderItems(), existed.getType());
 
         // New order status pending
-        this.createPending(existed.getUser());
+        if (existed.getType() == OrderType.SALES) {
+            this.createPending(existed.getUser());
+        }
 
         return existed;
     }
 
-    public void reduceQuantityProduct(Set<OrderItem> orderItems) {
+    public void adjustQuantityProduct(Set<OrderItem> orderItems, OrderType type) {
         for (OrderItem orderItem : orderItems) {
             Product product = orderItem.getProduct();
-            product.setStockQuantity(product.getStockQuantity() - orderItem.getQuantity());
+            switch (type) {
+                case SALES:
+                    product.setStockQuantity(product.getStockQuantity() - orderItem.getQuantity());
+                    break;
+                case PURCHASE:
+                    product.setStockQuantity(product.getStockQuantity() + orderItem.getQuantity());
+                    break;
+
+                default:
+                    break;
+            }
             productService.save(product);
         }
     }

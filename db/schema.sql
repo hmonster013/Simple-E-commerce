@@ -50,7 +50,8 @@ CREATE TABLE products (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
-    price NUMERIC(10, 2) NOT NULL,
+    purchase_price NUMERIC(10, 2) NOT NULL,
+    sale_price NUMERIC(10, 2) NOT NULL,
     image_url VARCHAR[],
     stock_quantity INT NOT NULL,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -83,6 +84,16 @@ CREATE TABLE reviews (
     id BIGSERIAL PRIMARY KEY,
     rating INT CHECK (rating >= 1 AND rating <= 5),
     comment TEXT,
+    create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE report (
+    id BIGSERIAL PRIMARY KEY,
+    date DATE NOT NULL,
+    type VARCHAR(50),
+    amount NUMERIC DEFAULT 0,
+    status VARCHAR(50),
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
